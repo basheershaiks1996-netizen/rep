@@ -1,0 +1,8 @@
+{
+  "database_path": "C:/Users/bashe/Downloads/NSE Live Tracker/upstox_scanner/Upstox_Historical_Data.db",
+  "table_name": "all_stock_indicators",
+  "refresh_seconds": 30,
+  "database_timezone": "Asia/Kolkata",
+  "cpr_narrow_percent": 0.35,
+  "cpr_wide_percent": 0.70
+}
