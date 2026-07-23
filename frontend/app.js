@@ -170,4 +170,4 @@ document.querySelectorAll(".filters select").forEach(select=>select.addEventList
 document.querySelectorAll(".tab").forEach(btn=>btn.onclick=()=>{view=btn.dataset.view;document.querySelectorAll(".tab").forEach(b=>{b.classList.toggle("active",b===btn);b.setAttribute("aria-selected",b===btn?"true":"false")});render()});
 document.querySelectorAll("th[data-sort]").forEach(th=>th.onclick=()=>{let k=th.dataset.sort;if(k===sortKey)desc=!desc;else{sortKey=k;desc=true}render()});
 pollReload();setInterval(pollReload,2000);
-load();setInterval(load,30000);
+load();setInterval(load,5000);
