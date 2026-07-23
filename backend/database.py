@@ -7,7 +7,7 @@ REQUIRED = [
 "rsi","cci","adx","macd_line","macd_signal","macd_histogram","vwap",
 "prevhigh","prevlow","ema_close_9","bb_upper","bb_middle","bb_lower",
 "pivot","pivot_r1","pivot_r2","pivot_r3","pivot_s1","pivot_s2","pivot_s3",
-"ma_20","ma_50","ma_200","virgin_cpr"
+"ma_20","ma_50","ma_200","virgin_cpr","orb"
 ]
 
 
@@ -45,7 +45,7 @@ def prepare(df, timezone):
     else:
         df["timestamp"] = df["timestamp"].dt.tz_convert(timezone)
     nums = [c for c in REQUIRED if c not in
-            ["instrument_key","symbol","timestamp","virgin_cpr"]]
+            ["instrument_key","symbol","timestamp","virgin_cpr","orb"]]
     for c in nums:
         df[c] = pd.to_numeric(df[c], errors="coerce")
 
@@ -132,7 +132,8 @@ def build(df, settings):
             "pivot_r3": latest_row.get("pivot_r3"),
             "pivot_s1": latest_row.get("pivot_s1"),
             "pivot_s2": latest_row.get("pivot_s2"),
-            "pivot_s3": latest_row.get("pivot_s3")
+            "pivot_s3": latest_row.get("pivot_s3"),
+            "orb": latest_row.get("orb")
         })
 
     return pd.DataFrame(result_data)

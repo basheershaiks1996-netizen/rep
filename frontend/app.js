@@ -90,7 +90,7 @@ function syncFilterStyles(){
 }
 
 function filtered(){
-  const q=$("search").value.toLowerCase().trim(), p=$("price").value,r=$("rsi").value,a=$("adx").value,c=$("cci").value,m=$("macd").value,cp=$("cpr").value,vc=$("virgin_cpr").value;
+  const q=$("search").value.toLowerCase().trim(), p=$("price").value,r=$("rsi").value,a=$("adx").value,c=$("cci").value,m=$("macd").value,cp=$("cpr").value,vc=$("virgin_cpr").value,ob=$("orb_filter").value;
   return rows.filter(x=>{
     if(q&&!x.symbol.toLowerCase().includes(q))return false;
     if(p==="1"&&!(x.price_change>1)||p==="2"&&!(x.price_change>2)||p==="5"&&!(x.price_change>5)||p==="-1"&&!(x.price_change<-1))return false;
@@ -101,6 +101,7 @@ function filtered(){
     if(cp&&x.cpr!==cp)return false;
     if(vc==="1"&& !isTruthy(x.virgin_cpr)) return false;
     if(vc==="0"&& isTruthy(x.virgin_cpr)) return false;
+    if(ob&&x.orb!==ob)return false;
     return true;
   });
 }
@@ -128,7 +129,8 @@ function render(){
   <td class="${x.RSI>60?"positive":"negative"}">${num(x.RSI,1)}</td><td class="${x.ADX>30?"positive":"negative"}">${num(x.ADX,1)}</td><td class="${x.CCI>100?"positive":"negative"}">${num(x.CCI,1)}</td>
   <td class="${x.macd_histogram>=0?"positive":"negative"}">${num(x.macd_histogram,4)}</td>
   <td><span class="cpr ${x.cpr?.toLowerCase()||"na"}">${x.cpr||"N/A"}</span></td>
-  <td class="${isTruthy(x.virgin_cpr)?"positive":"negative"}">${isTruthy(x.virgin_cpr)?"True":"False"}</td><td>${num(x.volume,0)}</td></tr>`).join("");
+  <td class="${isTruthy(x.virgin_cpr)?"positive":"negative"}">${isTruthy(x.virgin_cpr)?"True":"False"}</td><td>${num(x.volume,0)}</td>
+  <td class="orb-cell ${x.orb==="ORB-Buy"?"orb-buy":x.orb==="ORB-Sell"?"orb-sell":""}">${x.orb||""}</td></tr>`).join("");
 }
 
 async function load(){
@@ -159,7 +161,7 @@ async function load(){
   }
 }
 
-$("clear").onclick=()=>{["price","rsi","adx","cci","macd","cpr","virgin_cpr"].forEach(id=>$(id).value="");$("search").value="";sortKey="price_change";desc=true;render();syncFilterStyles();};
+$("clear").onclick=()=>{["price","rsi","adx","cci","macd","cpr","virgin_cpr","orb_filter"].forEach(id=>$(id).value="");$("search").value="";sortKey="price_change";desc=true;render();syncFilterStyles();};
 $("clear-search").onclick=()=>{$("search").value="";render();};
 $("refresh").onclick=load;
 $("search").addEventListener("input",()=>{render();syncSearchClearButton()});

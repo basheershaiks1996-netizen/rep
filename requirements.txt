@@ -2,3 +2,4 @@ fastapi>=0.115
 uvicorn[standard]>=0.34
 pandas>=2.2
 numpy>=1.26
+psutil>=5.9
